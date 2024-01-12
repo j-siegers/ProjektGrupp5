@@ -1,110 +1,112 @@
 package org.example;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
 public class ConvertLength {
-    private BufferedReader br;
+    private static final String EXIT_MESSAGE = "Exited";
+    private static final String INVALID_INPUT_MESSAGE = "Invalid input! Please enter a numeric value.";
 
     public enum LengthUnit {
-        MM, CM, DM , M, KM, MIL, INCHES, FEET, YARDS, MILE
+        MM, CM, DM, M, KM, MIL, INCHES, FEET, YARDS, MILE
     }
 
-    public static void main(String[] args) throws IOException {
+    public void runConversion() {
+        // Skapar en instans av ConvertLength-klassen
         ConvertLength converter = new ConvertLength();
-        converter.br = new BufferedReader(new InputStreamReader(System.in));
 
+        // En flagga som indikerar om konverteringen är klar
         boolean done = false;
+
+        // En loop som fortsätter tills konverteringen är klar
         while (!done) {
-            int choice = converter.runMenu();
-            if (choice == LengthUnit.values().length + 1) {
-                System.out.println("Exited");
+            // Använder ConvertLength-instansen för att välja en längdenhet
+            LengthUnit chosenUnit = converter.chooseLengthUnit();
+
+            // Om användaren väljer att avsluta konverteringen
+            if (chosenUnit == null) {
+                // Visar ett meddelande om att programmet avslutas
+                JOptionPane.showMessageDialog(null, EXIT_MESSAGE);
+
+                // Sätter flaggan done till true för att avsluta loopen
                 done = true;
             } else {
-                converter.convertAndDisplay(choice);
+                // Konverterar och visar resultatet för den valda längdenheten
+                converter.convertAndDisplay(chosenUnit);
 
-                System.out.print("Do you want to convert another length? (y/n): ");
-                String answer = converter.br.readLine().trim().toLowerCase();
-                if (!answer.equals("y")) {
-                    done = true;
-                }
+                // Frågar användaren om de vill göra en annan konvertering
+                // Om användaren väljer att inte göra en annan konvertering, sätts done till true
+                done = !converter.askForAnotherConversion();
             }
         }
     }
-    public int runMenu() throws IOException {
-        System.out.println("=========================");
-        System.out.println("Length Conversion Table");
+    private LengthUnit chooseLengthUnit() {
+        // Hämtar en array av alla möjliga längdenheter från enum LengthUnit
+        LengthUnit[] lengthUnits = LengthUnit.values();
 
-        int optionNumber = 1;
-        for (LengthUnit unit : LengthUnit.values()) {
-            System.out.println(optionNumber + ". " + unit);
-            optionNumber++;
-        }
-        System.out.println(optionNumber + ". Quit");
+        // Skapar en JComboBox (rullista) med längdenheterna
+        JComboBox<LengthUnit> comboBox = new JComboBox<>(lengthUnits);
 
-        int tableChoice;
-        while (true) {
-            try {
-                System.out.print("Enter choice: ");
-                String input = br.readLine().trim();
-                tableChoice = Integer.parseInt(input);
-                if (tableChoice >= 1 && tableChoice <= optionNumber) {
-                    break;
-                } else {
-                    System.out.println("Invalid choice, please enter a valid number.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input, please enter a valid number.");
-            }
-        }
-        return tableChoice;
+        // Visar en dialogruta med rullistan och en OK/Cancel-knapp
+        int option = JOptionPane.showConfirmDialog(null, comboBox, "Choose a Length Unit", JOptionPane.OK_CANCEL_OPTION);
+
+        // Returnerar den valda längdenheten om användaren klickar på OK, annars returneras null
+        return (option == JOptionPane.OK_OPTION) ? (LengthUnit) comboBox.getSelectedItem() : null;
     }
 
-    public void convertAndDisplay(int choice) throws IOException {
-        LengthUnit inputUnit = LengthUnit.values()[choice - 1];
-        double inputValue = getInput();
 
-        int outputChoice;
-        while (true) {
-            try {
-                System.out.print("Enter the desired length unit: ");
-                String input = br.readLine().trim();
-                outputChoice = Integer.parseInt(input);
-                if (outputChoice >= 1 && outputChoice <= LengthUnit.values().length) {
-                    break;
-                } else {
-                    System.out.println("Invalid choice, please enter a valid number.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input, please enter a valid number.");
-            }
-        }
+    private void convertAndDisplay(LengthUnit inputUnit) {
+        // Hämtar användarens inmatade längdvärde
+        double inputValue = getInput("Enter the length:");
 
-        LengthUnit outputUnit = LengthUnit.values()[outputChoice - 1];
+        // Använder den tidigare förklarade metoden för att låta användaren välja en önskad längdenhet för resultatet
+        LengthUnit outputUnit = chooseLengthUnit();
 
-        double conversionFactor = getConversionFactor(inputUnit, outputUnit);
-        double result = convertLength(inputValue, conversionFactor);
-        displayResult(result, outputUnit);
-    }
+        // Om användaren väljer en giltig längdenhet
+        if (outputUnit != null) {
+            // Hämtar omvandlingsfaktorn mellan inputUnit och outputUnit
+            double conversionFactor = getConversionFactor(inputUnit, outputUnit);
 
-    private double getInput() throws IOException {
-        while (true) {
-            try {
-                System.out.print("Enter the length: ");
-                String input = br.readLine().trim();
-                return Double.parseDouble(input);
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input, please enter a valid number.");
-            }
+            // Utför själva konverteringen och får resultatet
+            double result = convertLength(inputValue, conversionFactor);
+
+            // Visar resultatet för användaren
+            displayResult(result, outputUnit);
         }
     }
 
-    private double convertLength(double input, double conversionFactor) {
-        return input * conversionFactor;
+
+    private double getInput(String prompt) {
+        // Visar en inmatningsdialogruta med det givna meddelandet (prompt)
+        String input = JOptionPane.showInputDialog(null, prompt);
+
+        // Använder en annan metod för att konvertera och hantera inmatningen
+        return parseDoubleInput(input, prompt);
     }
+
+
+    private double parseDoubleInput(String input, String prompt) {
+        // Om användaren klickar på Avbryt i inmatningsdialogrutan
+        if (input == null) {
+            // Visar ett meddelande om att programmet avslutas och avslutar programmet
+            JOptionPane.showMessageDialog(null, EXIT_MESSAGE);
+            System.exit(0);
+        }
+
+        try {
+            // Försöker konvertera inmatningen till en double efter att ha trimmat bort eventuella mellanslag
+            return Double.parseDouble(input.trim());
+        } catch (NumberFormatException e) {
+            // Om det uppstår ett NumberFormatException (inmatningen är inte ett giltigt nummer)
+            // Visar ett felmeddelande och ber användaren om ny inmatning genom att rekursivt anropa getInput-metoden
+            JOptionPane.showMessageDialog(null, INVALID_INPUT_MESSAGE);
+            return getInput(prompt);
+        }
+    }
+
 
     private double getConversionFactor(LengthUnit inputUnit, LengthUnit outputUnit) {
+        // Använder en nästlad switch-sats för att matcha inputUnit och outputUnit och returnera rätt omvandlingsfaktor
         switch (inputUnit) {
             case MM:
                 switch (outputUnit) {
@@ -237,11 +239,27 @@ public class ConvertLength {
                 }
                 break;
         }
-
-        // If conversion factor is not defined, return 1.0
         return 1.0;
     }
-    private void displayResult(double result, LengthUnit outputUnit) {
-        System.out.println(outputUnit + ": " + result);
+
+    private double convertLength(double inputValue, double conversionFactor) {
+        // Utför längdkonverteringen genom att multiplicera längdvärdet med omvandlingsfaktorn
+        return inputValue * conversionFactor;
     }
+
+
+    private void displayResult(double result, LengthUnit outputUnit) {
+        // Visar en dialogruta med det beräknade resultatet och den valda längdenheten
+        JOptionPane.showMessageDialog(null, "Result: " + result + " " + outputUnit);
+    }
+
+
+    private boolean askForAnotherConversion() {
+        // Visar en bekräftelsedialogruta med alternativen "Ja" och "Nej"
+        int response = JOptionPane.showConfirmDialog(null, "Do you want to convert another length?", "Confirmation", JOptionPane.YES_NO_OPTION);
+
+        // Returnerar true om användaren väljer "Ja", annars false
+        return response == JOptionPane.YES_OPTION;
+    }
+
 }
