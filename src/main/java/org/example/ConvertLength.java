@@ -3,6 +3,22 @@ package org.example;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
+/**
+ * Ändra förkortningar till fullständiga ord.
+ * Ändra utseendet i Return rutan. Det ska stå vad du har konverterat från och till inte bara till.
+ * Behövs JComboBox? Används inte i main. Vad är bäst?
+ * Skriv tester
+ * Måste ha en if/else i askForAnotherConversation
+ * 	  lägg till else "om nej fråga vill du göra en annan konvertering" y/n
+ *    om ja skicka tillbaka till main,
+ * 	  om nej avsluta programmet.
+ * Ändra/lägg till meddelanden.
+ *
+ */
+
+
+
+
 public class ConvertLength {
     private static final String EXIT_MESSAGE = "Exited";
     private static final String INVALID_INPUT_MESSAGE = "Invalid input! Please enter a numeric value.";
@@ -249,8 +265,10 @@ public class ConvertLength {
 
 
     private void displayResult(double result, LengthUnit outputUnit) {
+        // // Formaterar om resultatet att visa max tre decimaler
+        String formattedResult = String.format("%.3f", result);
         // Visar en dialogruta med det beräknade resultatet och den valda längdenheten
-        JOptionPane.showMessageDialog(null, "Result: " + result + " " + outputUnit);
+        JOptionPane.showMessageDialog(null, "Result: " + formattedResult + " " + outputUnit);
     }
 
 
