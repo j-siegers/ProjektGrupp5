@@ -5,17 +5,11 @@ import javax.swing.JOptionPane;
 /**
  * Ändra utseendet i Return rutan. Det ska stå vad du har konverterat från och till inte bara till.
  * Skriv tester
- * Ändra/lägg till meddelanden.
  */
 
 public class ConvertLength {
-    private static final String EXIT_MESSAGE = "Exited";
-    private static final String INVALID_INPUT_MESSAGE = "Invalid input! Please enter a numeric value.";
-    private static final String CHOOSE_LENGTH_MESSAGE = "Choose a Length Unit:";
-
-
     public enum LengthUnit {
-        Millimeter, Centimeter, Decimeter, Meter, Kilometer, Mil, Inches, Feet, Yard, Mile
+        Millimeter, Centimeter, Decimeter, Meter, Kilometer, Mil, Inch, Feet, Yard, Mile
     }
 
     public void runConversion() {
@@ -25,7 +19,7 @@ public class ConvertLength {
             LengthUnit chosenUnit = converter.chooseLengthUnit();
 
             if (chosenUnit == null) {
-                JOptionPane.showMessageDialog(null, EXIT_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Exited");
                 done = true;
             } else {
                 converter.convertAndDisplay(chosenUnit);
@@ -36,7 +30,7 @@ public class ConvertLength {
 
     private LengthUnit chooseLengthUnit() {
         LengthUnit[] lengthUnits = LengthUnit.values();
-        Object userInput = JOptionPane.showInputDialog(null, CHOOSE_LENGTH_MESSAGE, "Length Unit", JOptionPane.PLAIN_MESSAGE, null, lengthUnits, lengthUnits[0]);
+        Object userInput = JOptionPane.showInputDialog(null, "Choose a Length Unit:", "Length Unit", JOptionPane.PLAIN_MESSAGE, null, lengthUnits, lengthUnits[0]);
 
         if (userInput == null) {
             return null;
@@ -62,13 +56,13 @@ public class ConvertLength {
 
     private double parseDoubleInput(String input, String prompt) {
         if (input == null) {
-            JOptionPane.showMessageDialog(null, EXIT_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Exited");
             System.exit(0);
         }
         try {
             return Double.parseDouble(input.trim());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, INVALID_INPUT_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Invalid input! Please enter a numeric value.");
             return getInput(prompt);
         }
     }
@@ -82,7 +76,7 @@ public class ConvertLength {
                     case Meter: return 0.001;
                     case Kilometer: return 0.000001;
                     case Mil: return 1.00e-7;
-                    case Inches: return 0.0394;
+                    case Inch: return 0.0394;
                     case Feet: return 0.00328;
                     case Yard: return 0.00109;
                     case Mile: return 6.21e-7;
@@ -95,7 +89,7 @@ public class ConvertLength {
                     case Meter: return 0.01;
                     case Kilometer: return 0.00001;
                     case Mil: return 0.000001;
-                    case Inches: return 0.394;
+                    case Inch: return 0.394;
                     case Feet: return 0.0328;
                     case Yard: return 0.0109;
                     case Mile: return 0.0000062137;
@@ -108,7 +102,7 @@ public class ConvertLength {
                     case Meter: return 0.1;
                     case Kilometer: return 0.0001;
                     case Mil: return 0.00001;
-                    case Inches: return 3.94;
+                    case Inch: return 3.94;
                     case Feet: return 0.328;
                     case Yard: return 0.109;
                     case Mile: return 0.000062137;
@@ -121,7 +115,7 @@ public class ConvertLength {
                     case Decimeter: return 10.0;
                     case Kilometer: return 0.001;
                     case Mil: return 0.0001;
-                    case Inches: return 39.37;
+                    case Inch: return 39.37;
                     case Feet: return 3.28;
                     case Yard: return 1.09;
                     case Mile: return 0.000621;
@@ -134,7 +128,7 @@ public class ConvertLength {
                     case Decimeter: return 10000.0;
                     case Meter: return 1000.0;
                     case Mil: return 0.1;
-                    case Inches: return 39370.08;
+                    case Inch: return 39370.08;
                     case Feet: return 3280.84;
                     case Yard: return 1093.61;
                     case Mile: return 0.621;
@@ -147,13 +141,13 @@ public class ConvertLength {
                     case Decimeter: return 100000.0;
                     case Meter: return 10000.0;
                     case Kilometer: return 10.0;
-                    case Inches: return 393700.79;
+                    case Inch: return 393700.79;
                     case Feet: return 32808.4;
                     case Yard: return 10936.13;
                     case Mile: return 6.21;
                 }
                 break;
-            case Inches:
+            case Inch:
                 switch (outputUnit) {
                     case Millimeter: return 25.4;
                     case Centimeter: return 2.54;
@@ -174,7 +168,7 @@ public class ConvertLength {
                     case Meter: return 0.3048;
                     case Kilometer: return 0.0003048;
                     case Mil: return 0.00003048;
-                    case Inches: return 12.0;
+                    case Inch: return 12.0;
                     case Yard: return 0.333;
                     case Mile: return 0.000189;
                 }
@@ -187,7 +181,7 @@ public class ConvertLength {
                     case Meter: return 0.9144;
                     case Kilometer: return 0.0009144;
                     case Mil: return 0.00009144;
-                    case Inches: return 36.0;
+                    case Inch: return 36.0;
                     case Feet: return 3.0;
                     case Mile: return 0.000568;
                 }
@@ -200,13 +194,13 @@ public class ConvertLength {
                     case Meter: return 1609.344;
                     case Kilometer: return 1.61;
                     case Mil: return 0.161;
-                    case Inches: return 63360.0;
+                    case Inch: return 63360.0;
                     case Feet: return 5280.0;
                     case Yard: return 1760.0;
                 }
                 break;
         }
-        return 1.0;
+        return 1;
     }
 
     private double convertLength(double inputValue, double conversionFactor) {
