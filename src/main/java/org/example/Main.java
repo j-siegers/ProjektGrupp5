@@ -11,44 +11,52 @@ public class Main {
         ConvertLength lengthConverter = new ConvertLength();
         ConvertSpeed speedConverter = new ConvertSpeed();
 
-        // Låt användaren välja vilken konvertering de vill göra
-        String[] conversionOptions = {
-                "Area Conversion",
-                "Binary Conversion",
-                "Energy Conversion",
-                "Length Conversion",
-                "Speed Conversion"
-        };
-        String userChoice = (String) JOptionPane.showInputDialog(
-                null,
-                "Välj typ av konvertering:",
-                "Huvudmeny",
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                conversionOptions,
-                conversionOptions[0]
-        );
+        boolean runMain = true;
 
-        // Anropa motsvarande metod i den valda konverteringsklassen
-        if (userChoice != null) {
-            switch (userChoice) {
-                case "Area Conversion":
-                    //areaConverter.runConversion();
-                    break;
-                case "Binary Conversion":
-                    //binaryConverter.runConversion();
-                    break;
-                case "Energy Conversion":
-                    //energyConverter.runConversion();
-                    break;
-                case "Length Conversion":
-                    lengthConverter.runConversion();
-                    break;
-                case "Speed Conversion":
-                    //speedConverter.runConversion();
-                    break;
-                default:
-                    JOptionPane.showMessageDialog(null, "Ogiltigt val");
+        while (runMain) {
+
+            String[] conversionOptions = {
+                    "Area Conversion",
+                    "Binary Conversion",
+                    "Energy Conversion",
+                    "Length Conversion",
+                    "Speed Conversion"
+            };
+            String userChoice = (String) JOptionPane.showInputDialog(
+                    null,
+                    "Välj typ av konvertering:",
+                    "Huvudmeny",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    conversionOptions,
+                    conversionOptions[0]
+            );
+
+            if (userChoice != null) {
+                switch (userChoice) {
+                    case "Area Conversion":
+                        //areaConverter.runConversion();
+                        break;
+                    case "Binary Conversion":
+                        //binaryConverter.runConversion();
+                        break;
+                    case "Energy Conversion":
+                        //energyConverter.runConversion();
+                        break;
+                    case "Length Conversion":
+                        lengthConverter.runConversion();
+                        break;
+                    case "Speed Conversion":
+                        //speedConverter.runConversion();
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(null, "Ogiltigt val");
+                }
+            }
+            int response = JOptionPane.showConfirmDialog(null, "Do you want to perform another conversion?", "Confirmation", JOptionPane.YES_NO_OPTION);
+
+            if (response == JOptionPane.NO_OPTION) {
+                runMain = false;
             }
         }
     }
