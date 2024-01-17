@@ -1,6 +1,7 @@
 package org.example;
 
 import javax.swing.JOptionPane;
+import java.util.Locale;
 
 /**
  * Ändra utseendet i Return rutan. Det ska stå vad du har konverterat från och till inte bara till.
@@ -19,7 +20,6 @@ public class ConvertLength {
             LengthUnit chosenUnit = converter.chooseLengthUnit();
 
             if (chosenUnit == null) {
-                JOptionPane.showMessageDialog(null, "Exited");
                 done = true;
             } else {
                 converter.convertAndDisplay(chosenUnit);
@@ -31,11 +31,17 @@ public class ConvertLength {
     private LengthUnit chooseLengthUnit() {
         LengthUnit[] lengthUnits = LengthUnit.values();
         Object userInput = JOptionPane.showInputDialog(null, "Choose a Length Unit:", "Length Unit", JOptionPane.PLAIN_MESSAGE, null, lengthUnits, lengthUnits[0]);
-
-        if (userInput == null) {
-            return null;
-        }
         return (LengthUnit) userInput;
+    }
+
+    private double getInput(String prompt) {
+        String input = JOptionPane.showInputDialog(null, prompt);
+        try {
+            return Double.parseDouble(input.trim());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Invalid input! Please enter a numeric value.");
+            return getInput(prompt);
+        }
     }
 
     private void convertAndDisplay(LengthUnit inputUnit) {
@@ -44,27 +50,20 @@ public class ConvertLength {
 
         if (outputUnit != null) {
             double conversionFactor = getConversionFactor(inputUnit, outputUnit);
-            double result = convertLength(inputValue, conversionFactor);
-            displayResult(result, outputUnit);
+            double result = performConversion(inputValue, conversionFactor);
+            displayConversionResult(result, inputUnit, inputValue, outputUnit);
         }
+
     }
 
-    private double getInput(String prompt) {
-        String input = JOptionPane.showInputDialog(null, prompt);
-        return parseDoubleInput(input, prompt);
+    private double performConversion(double inputValue, double conversionFactor) {
+        return inputValue * conversionFactor;
     }
 
-    private double parseDoubleInput(String input, String prompt) {
-        if (input == null) {
-            JOptionPane.showMessageDialog(null, "Exited");
-            System.exit(0);
-        }
-        try {
-            return Double.parseDouble(input.trim());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Invalid input! Please enter a numeric value.");
-            return getInput(prompt);
-        }
+    private void displayConversionResult(double result, LengthUnit inputUnit, double inputValue, LengthUnit outputUnit) {
+        String formattedResult = String.format(Locale.US, "%.2f", result);
+        String formattedInputValue = String.format(Locale.US, "%.2f", inputValue);
+        JOptionPane.showMessageDialog(null, "Converted: " + formattedInputValue + " " + inputUnit + " to " + formattedResult + " " + outputUnit, "Conversion Result", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private double getConversionFactor(LengthUnit inputUnit, LengthUnit outputUnit) {
@@ -201,15 +200,6 @@ public class ConvertLength {
                 break;
         }
         return 1;
-    }
-
-    private double convertLength(double inputValue, double conversionFactor) {
-        return inputValue * conversionFactor;
-    }
-
-    private void displayResult(double result, LengthUnit outputUnit) {
-        String formattedResult = String.format("%.3f", result);
-        JOptionPane.showMessageDialog(null, "Result: " + formattedResult + " " + outputUnit);
     }
 
     private boolean askForAnotherConversion() {

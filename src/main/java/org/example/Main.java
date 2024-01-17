@@ -32,26 +32,28 @@ public class Main {
                     conversionOptions[0]
             );
 
-            if (userChoice != null) {
-                switch (userChoice) {
-                    case "Area Conversion":
-                        //areaConverter.runConversion();
-                        break;
-                    case "Binary Conversion":
-                        //binaryConverter.runConversion();
-                        break;
-                    case "Energy Conversion":
-                        //energyConverter.runConversion();
-                        break;
-                    case "Length Conversion":
-                        lengthConverter.runConversion();
-                        break;
-                    case "Speed Conversion":
-                        //speedConverter.runConversion();
-                        break;
-                    default:
-                        JOptionPane.showMessageDialog(null, "Ogiltigt val");
-                }
+            if (userChoice == null) {
+                break;
+            }
+
+            switch (userChoice) {
+                case "Area Conversion":
+                    //areaConverter.runConversion();
+                    break;
+                case "Binary Conversion":
+                    //binaryConverter.runConversion();
+                    break;
+                case "Energy Conversion":
+                    //energyConverter.runConversion();
+                    break;
+                case "Length Conversion":
+                    lengthConverter.runConversion();
+                    break;
+                case "Speed Conversion":
+                    //speedConverter.runConversion();
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "Ogiltigt val");
             }
             int response = JOptionPane.showConfirmDialog(null, "Do you want to perform another conversion?", "Confirmation", JOptionPane.YES_NO_OPTION);
 

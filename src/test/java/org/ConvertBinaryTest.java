@@ -4,8 +4,8 @@ import static org.example.ConvertBinary.*;
 
 /**
  * Created by Johan Siegers <BR>
- * Date: 2024-01-09 <BR>
- * Time: 19:17 <BR>
+ * Date: 2024-01-16 <BR>
+ * Time: 20:31 <BR>
  * Project: ProjektGrupp5 <BR>
  * Copyright: MIT <BR>
  * <BR>
@@ -44,5 +44,22 @@ class ConvertBinaryTest {
     @Test
     void testTextToHexadecimal_NullInput() {
         assertThrows(NullPointerException.class, () -> textToHexadecimal(null));
+    }
+
+    @Test
+    void testInputConverter () {
+        org.example.ConvertBinary converter = new org.example.ConvertBinary();
+        converter.menuChoice = 0;
+        converter.inputData = "hej";
+        assertEquals("1101000 1100101 1101010", inputConverter(converter));
+    }
+
+    @Test
+    void testBytesConverter () {
+        String inputData = "1024 tb";
+        assertEquals("""
+                1024 terabyte =\s
+                1048576.0 Gigabyte
+                1.0 Petabyte""", bytesConverter(inputData));
     }
 }
