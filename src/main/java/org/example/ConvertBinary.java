@@ -16,6 +16,7 @@ import javax.swing.*;
  */
 public class ConvertBinary {
 
+    // Instansvariabler
     public String inputData;  // Sparar inmatad användardata i objekt
     public String outputData;  // Sparar utdata i objekt
     public int menuChoice;  // Sparar valt menyalternativ
@@ -62,7 +63,7 @@ public class ConvertBinary {
      */
     public static String inputConverter (ConvertBinary choice){
         // Vid binär omvandling körs denna kod
-        if (choice.menuChoice == 0){
+        if (choice.menuChoice == 0) {
 
           // Inmatad data skickas till binäromvandlaren
           choice.outputData = textToBinary(choice.inputData);

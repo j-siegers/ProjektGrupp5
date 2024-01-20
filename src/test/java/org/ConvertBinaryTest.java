@@ -46,6 +46,7 @@ class ConvertBinaryTest {
         assertThrows(NullPointerException.class, () -> textToHexadecimal(null));
     }
 
+    // Tester av resterande metoder
     @Test
     void testInputConverter () {
         org.example.ConvertBinary converter = new org.example.ConvertBinary();
