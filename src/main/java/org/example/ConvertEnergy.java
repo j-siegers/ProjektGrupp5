@@ -5,8 +5,6 @@ import javax.swing.*;
 public class ConvertEnergy {
 
     public void runConversion() {
-        // Visa välkomstmeddelande och instruktioner för användaren
-        JOptionPane.showMessageDialog(null, "Energieomvandlare");
 
         // Läs användarens inmatning som en sträng och använder J0ptionPane för att visa en input dialog
         String amountStr = JOptionPane.showInputDialog("Ange energimängd:");
