@@ -34,7 +34,7 @@ public class ConvertEnergy {
     }
 
     // Privat metod för att hämta konverteringsfaktorn mellan två enheter
-    private static double getConversionFactor(int fromUnit, int toUnit) {
+    public static double getConversionFactor(int fromUnit, int toUnit) {
         switch (fromUnit) {
             case 1: // Joule
                 switch (toUnit) {
@@ -91,7 +91,7 @@ public class ConvertEnergy {
     }
 
     // Hjälpmetod för att hämta index för en enhet
-    private static int getUnitIndex(String unit) {
+    public static int getUnitIndex(String unit) {
         return switch (unit) {
             case "Joule" -> 1;
             case "Kilojoule" -> 2;
