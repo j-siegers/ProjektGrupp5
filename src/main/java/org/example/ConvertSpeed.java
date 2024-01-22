@@ -18,14 +18,14 @@ public class ConvertSpeed {
     public void runConversion() {
         // Alternativ för hastighetsomvandling presenteras i en GUI-lista.
         String[] speedOptions = {
-                "Kilometers per Hour to Miles per Hour",
-                "Miles per Hour to Kilometers per Hour"
+                "Kilometer per Timme till Miles per Hour",
+                "Miles per Hour till Kilometer per Timme"
         };
         // Hämta användarens val av omvandlingstyp med hjälp av en GUI-dialog.
         String speedChoice = (String) JOptionPane.showInputDialog(
                 null,
-                "Choose the type of speed conversion:",
-                "Speed Conversion",
+                "Välj typ av hastighetsomvandling:",
+                "Hastighetsomvandling",
                 JOptionPane.QUESTION_MESSAGE,
                 null,
                 speedOptions,
@@ -37,14 +37,14 @@ public class ConvertSpeed {
         }
         // Utför den valda omvandlingen baserat på användarens val.
         switch (speedChoice) {
-            case "Kilometers per Hour to Miles per Hour":
-                convertAndShowMessage("Kilometers per Hour", "Miles per Hour", this::kmphToMph);
+            case "Kilometer per Timme till Miles per Hour":
+                convertAndShowMessage("Kilometer per Timme", "Miles per Hour", this::kmphToMph);
                 break;
-            case "Miles per Hour to Kilometers per Hour":
-                convertAndShowMessage("Miles per Hour", "Kilometers per Hour", this::mphToKmph);
+            case "Miles per Hour till Kilometer per Timme":
+                convertAndShowMessage("Miles per Hour", "Kilometer per Timme", this::mphToKmph);
                 break;
             default:
-                showMessage("Invalid choice");
+                showMessage("Ogiltigt val");
         }
     }
 
@@ -54,7 +54,7 @@ public class ConvertSpeed {
         try {
             return Double.parseDouble(input);
         } catch (NumberFormatException e) {
-            showMessage("Invalid input. Please enter a valid number.");
+            showMessage("Ogiltig inmatning. Ange ett giltigt nummer. ");
             return getDoubleInput(message);
         }
     }
@@ -66,9 +66,9 @@ public class ConvertSpeed {
 
     // Hjälpmetod för att konvertera och visa resultatet
     private void convertAndShowMessage(String fromUnit, String toUnit, Converter converter) {
-        double input = getDoubleInput("Enter speed in " + fromUnit + ":");
+        double input = getDoubleInput("Ange hastighet i " + fromUnit + ":");
         double result = converter.convert(input);
-        showMessage(input + " " + fromUnit + " is equal to " + result + " " + toUnit + ".");
+        showMessage(input + " " + fromUnit + " är lika med " + result + " " + toUnit + ".");
     }
 
     // Funktionellt gränssnitt för omvandlare
