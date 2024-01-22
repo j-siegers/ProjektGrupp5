@@ -44,7 +44,7 @@ public class Main {
                     //binaryConverter.runConversion();
                     break;
                 case "Energy Conversion":
-                    //energyConverter.runConversion();
+                    energyConverter.runConversion();
                     break;
                 case "Length Conversion":
                     lengthConverter.runConversion();

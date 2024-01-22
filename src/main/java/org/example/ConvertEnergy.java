@@ -1,43 +1,36 @@
 package org.example;
 
-import javax.swing.JOptionPane;
-
-/**
- * -Skriv tester
- * -Möjligtsvis hitta annat alternativ för att lagra konverteringarna för en mindre klottrad och upprepande kod
- */
+import javax.swing.*;
 
 public class ConvertEnergy {
 
-    public static void main(String[] args) {
-        // Visa välkomstmeddelande och instruktioner för användaren
-        JOptionPane.showMessageDialog(null, "Energieomvandlare");
+    public void runConversion() {
 
-        // Läs användarens inmatning som en sträng
+        // Läs användarens inmatning som en sträng och använder J0ptionPane för att visa en input dialog
         String amountStr = JOptionPane.showInputDialog("Ange energimängd:");
         double amount = Double.parseDouble(amountStr);
 
-        // Visa lista över energienheter och låt användaren välja
-        Object[] fromOptions = {"Joule", "Kilojoule", "Kilokalorie", "Watt-timmar", "Kilowatt-timmar"};
-        int fromUnit = JOptionPane.showOptionDialog(null, "Välj enheten för den angivna värden:", "Välj enhet",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, fromOptions, fromOptions[0]) + 1;
+        // Visa lista över energienheter och låt användaren välja med dropdown-lista
+        String[] fromOptions = {"Joule", "Kilojoule", "Kilokalorie", "Watt-timmar", "Kilowatt-timmar"};
+        String fromUnit = (String) JOptionPane.showInputDialog(null, "Välj enheten för den angivna värden:", "Välj enhet",
+                JOptionPane.QUESTION_MESSAGE, null, fromOptions, fromOptions[0]);
 
-        // Visa lista över enheter att konvertera till och låt användaren välja
-        Object[] toOptions = {"Joule", "Kilojoule", "Kilokalorie", "Watt-timmar", "Kilowatt-timmar"};
-        int toUnit = JOptionPane.showOptionDialog(null, "Välj enheten du vill konvertera till:", "Välj enhet",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, toOptions, toOptions[0]) + 1;
+        // Visa lista över enheter att konvertera till och låt användaren välja med dropdown-lista
+        String[] toOptions = {"Joule", "Kilojoule", "Kilokalorie", "Watt-timmar", "Kilowatt-timmar"};
+        String toUnit = (String) JOptionPane.showInputDialog(null, "Välj enheten du vill konvertera till:", "Välj enhet",
+                JOptionPane.QUESTION_MESSAGE, null, toOptions, toOptions[0]);
 
         // Beräkna konverteringsfaktorn
-        double conversionFactor = getConversionFactor(fromUnit, toUnit);
+        double conversionFactor = getConversionFactor(getUnitIndex(fromUnit), getUnitIndex(toUnit));
 
         // Beräknar den omvandlade energin
         double convertedEnergy = amount * conversionFactor;
 
-        // Formatera resultatet och begränsar antalet decimaler
-        String formattedResult = String.format("%.5f", convertedEnergy);
+        // Formatera resultatet och begränsa antalet decimaler för att göra det mer lättläst
+        String formattedResult = String.format("%.3f", convertedEnergy);
 
-        // Visa den omvandlade energin i en dialogruta
-        JOptionPane.showMessageDialog(null, amount + " enheter är lika med " + formattedResult + " i den valda enheten.");
+        // Visa den omvandlade energin i en dialogruta med inkluderade kommentarer som säger vilka enheter som använts
+        JOptionPane.showMessageDialog(null, amount + " " + fromUnit + " is equal to " + formattedResult + " " + toUnit + ".");
     }
 
     // Privat metod för att hämta konverteringsfaktorn mellan två enheter
@@ -87,14 +80,25 @@ public class ConvertEnergy {
                 switch (toUnit) {
                     case 1: return 3600000.0; // Kilowatt-timme till Joule
                     case 2: return 3600.0; // Kilowatt-timme till Kilojoule
-                    case 3: return 860.0; // Kilowatt-timme till Kilokalori
+                    case 3: return 860.4; // Kilowatt-timme till Kilokalori
                     case 4: return 86000.0; // Kilowatt-timme till Watt-timme
                     case 5: return 1.0; // Kilowatt-timme till Kilowatt-timme
                 }
                 break;
         }
-
         // Default case
         return 1.0;
+    }
+
+    // Hjälpmetod för att hämta index för en enhet
+    private static int getUnitIndex(String unit) {
+        return switch (unit) {
+            case "Joule" -> 1;
+            case "Kilojoule" -> 2;
+            case "Kilokalorie" -> 3;
+            case "Watt-timmar" -> 4;
+            case "Kilowatt-timmar" -> 5;
+            default -> 1;
+        };
     }
 }
