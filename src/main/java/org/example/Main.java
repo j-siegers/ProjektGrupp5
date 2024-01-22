@@ -50,7 +50,7 @@ public class Main {
                     lengthConverter.runConversion();
                     break;
                 case "Speed Conversion":
-                    //speedConverter.runConversion();
+                    speedConverter.runConversion();
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "Ogiltigt val");
