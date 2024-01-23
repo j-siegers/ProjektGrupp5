@@ -7,17 +7,17 @@ public class ConvertEnergy {
     public void runConversion() {
 
         // Läs användarens inmatning som en sträng och använder J0ptionPane för att visa en input dialog
-        String amountStr = JOptionPane.showInputDialog("Ange energimängd:");
+        String amountStr = JOptionPane.showInputDialog("Enter amount:");
         double amount = Double.parseDouble(amountStr);
 
         // Visa lista över energienheter och låt användaren välja med dropdown-lista
         String[] fromOptions = {"Joule", "Kilojoule", "Kilokalorie", "Watt-timmar", "Kilowatt-timmar"};
-        String fromUnit = (String) JOptionPane.showInputDialog(null, "Välj enheten för den angivna värden:", "Välj enhet",
+        String fromUnit = (String) JOptionPane.showInputDialog(null, "Choose unit for the given value:", "Choose unit",
                 JOptionPane.QUESTION_MESSAGE, null, fromOptions, fromOptions[0]);
 
         // Visa lista över enheter att konvertera till och låt användaren välja med dropdown-lista
         String[] toOptions = {"Joule", "Kilojoule", "Kilokalorie", "Watt-timmar", "Kilowatt-timmar"};
-        String toUnit = (String) JOptionPane.showInputDialog(null, "Välj enheten du vill konvertera till:", "Välj enhet",
+        String toUnit = (String) JOptionPane.showInputDialog(null, "Choose unit for the desired conversion:", "Choose unit",
                 JOptionPane.QUESTION_MESSAGE, null, toOptions, toOptions[0]);
 
         // Beräkna konverteringsfaktorn
