@@ -41,7 +41,7 @@ public class Main {
                     //areaConverter.runConversion();
                     break;
                 case "Binary Conversion":
-                    //binaryConverter.runConversion();
+                    binaryConverter.runConversion();
                     break;
                 case "Energy Conversion":
                     energyConverter.runConversion();

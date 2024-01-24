@@ -4,15 +4,19 @@ import javax.swing.JOptionPane;
 import java.util.Locale;
 
 /**
- * Ändra utseendet i Return rutan. Det ska stå vad du har konverterat från och till inte bara till.
- * Skriv tester
+ * This class provides functionality for converting lengths between different units.
  */
-
 public class ConvertLength {
+
+    /**
+     * Enumeration representing different length units.
+     */
     public enum LengthUnit {
         Millimeter, Centimeter, Decimeter, Meter, Kilometer, Mil, Inch, Feet, Yard, Mile
     }
-
+    /**
+     * Runs the length conversion program, allowing the user to choose units and perform conversions.
+     */
     public void runConversion() {
         ConvertLength converter = new ConvertLength();
         boolean done = false;
@@ -28,45 +32,77 @@ public class ConvertLength {
         }
     }
 
-    private LengthUnit chooseLengthUnit() {
+    /**
+     * Displays a dialog to the user to choose a length unit.
+     *
+     * @return The selected length unit.
+     */
+    public LengthUnit chooseLengthUnit() {
         LengthUnit[] lengthUnits = LengthUnit.values();
         Object userInput = JOptionPane.showInputDialog(null, "Choose a Length Unit:", "Length Unit", JOptionPane.PLAIN_MESSAGE, null, lengthUnits, lengthUnits[0]);
         return (LengthUnit) userInput;
     }
 
-    private double getInput(String prompt) {
+    /**
+     * Gets user input for a numeric value.
+     *
+     * @param prompt The prompt to be displayed to the user.
+     * @return The user-entered numeric value.
+     */
+    public double getInput(String prompt) {
         String input = JOptionPane.showInputDialog(null, prompt);
         try {
-            return Double.parseDouble(input.trim());
+            if (input != null) {
+                return Double.parseDouble(input.trim());
+            } else {
+                JOptionPane.showMessageDialog(null, "Input is null! Please enter a valid value.");
+                return getInput(prompt);
+            }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Invalid input! Please enter a numeric value.");
             return getInput(prompt);
         }
     }
 
-    private void convertAndDisplay(LengthUnit inputUnit) {
+    /**
+     * Converts the length from one unit to another and displays the result in a dialog.
+     *
+     * @param inputUnit The input length unit.
+     */
+    public void convertAndDisplay(LengthUnit inputUnit) {
         double inputValue = getInput("Enter the length:");
         LengthUnit outputUnit = chooseLengthUnit();
 
         if (outputUnit != null) {
             double conversionFactor = getConversionFactor(inputUnit, outputUnit);
             double result = performConversion(inputValue, conversionFactor);
-            displayConversionResult(result, inputUnit, inputValue, outputUnit);
-        }
 
+            String formattedResult = String.format(Locale.US, "%.2f", result);
+            String formattedInputValue = String.format(Locale.US, "%.2f", inputValue);
+
+            JOptionPane.showMessageDialog(null, "Converted: " + formattedInputValue + " " + inputUnit + " to " + formattedResult + " " + outputUnit, "Conversion Result", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
-    private double performConversion(double inputValue, double conversionFactor) {
+    /**
+     * Performs the actual length conversion based on the input value and conversion factor.
+     *
+     * @param inputValue       The input length value.
+     * @param conversionFactor The factor to multiply the input value for conversion.
+     * @return The converted length value.
+     */
+    public double performConversion(double inputValue, double conversionFactor) {
         return inputValue * conversionFactor;
     }
 
-    private void displayConversionResult(double result, LengthUnit inputUnit, double inputValue, LengthUnit outputUnit) {
-        String formattedResult = String.format(Locale.US, "%.2f", result);
-        String formattedInputValue = String.format(Locale.US, "%.2f", inputValue);
-        JOptionPane.showMessageDialog(null, "Converted: " + formattedInputValue + " " + inputUnit + " to " + formattedResult + " " + outputUnit, "Conversion Result", JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    private double getConversionFactor(LengthUnit inputUnit, LengthUnit outputUnit) {
+    /**
+     * Retrieves the conversion factor between two length units.
+     *
+     * @param inputUnit  The input length unit.
+     * @param outputUnit The output length unit.
+     * @return The conversion factor between the input and output length units.
+     */
+    public double getConversionFactor(LengthUnit inputUnit, LengthUnit outputUnit) {
         switch (inputUnit) {
             case Millimeter:
                 switch (outputUnit) {
@@ -202,7 +238,12 @@ public class ConvertLength {
         return 1;
     }
 
-    private boolean askForAnotherConversion() {
+    /**
+     * Asks the user if they want to perform another length conversion.
+     *
+     * @return True if the user wants to perform another conversion, false otherwise.
+     */
+    public boolean askForAnotherConversion() {
         int response = JOptionPane.showConfirmDialog(null, "Do you want to convert another length?", "Confirmation", JOptionPane.YES_NO_OPTION);
         return response == JOptionPane.YES_OPTION;
     }
