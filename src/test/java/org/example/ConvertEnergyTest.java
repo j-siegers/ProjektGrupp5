@@ -32,7 +32,9 @@ public class ConvertEnergyTest {
         // Testar GetUnitIndex för olika enheter
 
         assertEquals(1, ConvertEnergy.getUnitIndex("Joule"));
+        assertEquals(2, ConvertEnergy.getUnitIndex("Kilojoule"));
         assertEquals(3, ConvertEnergy.getUnitIndex("Kilokalorie"));
+        assertEquals(4, ConvertEnergy.getUnitIndex("Watt-timmar"));
         assertEquals(5, ConvertEnergy.getUnitIndex("Kilowatt-timmar"));
     }
 }
