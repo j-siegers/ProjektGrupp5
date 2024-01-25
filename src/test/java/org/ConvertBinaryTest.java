@@ -52,7 +52,7 @@ class ConvertBinaryTest {
         org.example.ConvertBinary converter = new org.example.ConvertBinary();
         converter.menuChoice = 0;
         converter.inputData = "hej";
-        assertEquals("1101000 1100101 1101010", inputConverter(converter));
+        assertEquals("1101000 1100101 1101010", converter.inputConverter(converter));
     }
 
     @Test
