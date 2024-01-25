@@ -7,19 +7,19 @@ public class ConvertArea {
 
         // Alternativ i dropdown meny
         String[] areaChoice = {"cm²", "dm²", "m²", "km²"};
-
         // Från - Dropdown-lista
-        String inputFrom = showInputDialog("Area", "Från:", areaChoice);
-
+        String inputFrom = inputDialog("Från: ", areaChoice);
         // Till - Dropdown-lista
-        String inputTo = showInputDialog("Area", "Till:", areaChoice);
+        String inputTo = inputDialog("Till: ", areaChoice);
+
 
         // Ange tal som ska konverteras
-        String inputAmountStr = showInputDialog("Tal");
+        String inputAmountStr = JOptionPane.showInputDialog("Tal");
         try {
             inputAmount = Double.parseDouble(inputAmountStr);       // talet typomvandlas från sträng till double
-        } catch (NumberFormatException e) {
-            showMessageDialog("Fel. Ange ett tal", "Fel", JOptionPane.ERROR_MESSAGE); // Om användaren skriver något som ej går att omvandlas till double.
+        } catch (NumberFormatException e) {                         // Om användaren skriver något som ej går att omvandlas till double.
+            JOptionPane.showMessageDialog(null,
+                    "Fel. Ange ett tal", "Fel", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -28,27 +28,18 @@ public class ConvertArea {
         double result = doConversion.convert(inputFrom, inputTo, inputAmount
         );
 
+
         // Presenterar resultatet.
         JOptionPane.showMessageDialog(
                 null, inputAmount + inputFrom + " är " + result + inputTo, "Resultat", JOptionPane.INFORMATION_MESSAGE);
     }
 
-
-    // --Metoder för Dialogrutor
-    // privata klasser, gör så att de endast fungerar innuti denna klass
-    private String showInputDialog(String title, String message, String[] options) {
+    // -------- Metoder
+    // Metoden skapar en dialiogruta med lista av alternativ
+    private String inputDialog(String message, String[] options) {
         return (String) JOptionPane.showInputDialog(
-                null, message, title, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                null, message, "Area", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
     }
-
-    private String showInputDialog(String message) {
-        return JOptionPane.showInputDialog(null, message);
-    }
-
-    private void showMessageDialog(String message, String title, int messageType) {
-        JOptionPane.showMessageDialog(null, message, title, messageType);
-    }
-
 
     // --Metod för att göra okoovertering, baserat på användarens val.
     public double convert(String inputFrom, String inputTo, double inputAmount) {
@@ -91,7 +82,6 @@ public class ConvertArea {
         }
         return result;
     }
-
 
     // Kör programmet för sig självt, alltså utan Main klassen
     public static void main(String[] args){
