@@ -38,7 +38,7 @@ public class Main {
 
             switch (userChoice) {
                 case "Area Conversion":
-                    //areaConverter.runConversion();
+                    areaConverter.runConversion();
                     break;
                 case "Binary Conversion":
                     //binaryConverter.runConversion();
