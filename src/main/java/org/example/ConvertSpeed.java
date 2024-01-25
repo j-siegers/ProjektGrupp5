@@ -1,15 +1,17 @@
 package org.example;
 import javax.swing.JOptionPane;
 
-// ConvertSpeed-klassen för att hantera hastighetsomvandlingar mellan kilometer per timme och engelska mil per timme.
+//ConvertSpeed-klassen för att hantera hastighetsomvandlingar mellan kilometer per timme och engelska mil per timme.
 public class ConvertSpeed {
 
-    // Konvertera från kilometer per timme till engelska mil per timme
+    // Konverterar hastigheten från kilometer per timme till engelska mil per timme.
+    // Implementation multiplicerar den givna hastigheten med omvandlingsfaktorn.
     public double kmphToMph(double kmph) {
         return kmph * 0.621371;
     }
 
-    // Konvertera från engelska mil per timme till kilometer per timme
+    // Konverterar hastigheten från engelska mil per timme till kilometer per timme.
+    // Implementation delar den givna hastigheten med omvandlingsfaktorn.
     public double mphToKmph(double mph) {
         return mph / 0.621371;
     }
@@ -18,14 +20,14 @@ public class ConvertSpeed {
     public void runConversion() {
         // Alternativ för hastighetsomvandling presenteras i en GUI-lista.
         String[] speedOptions = {
-                "Kilometer per Timme till Miles per Hour",
-                "Miles per Hour till Kilometer per Timme"
+                "Kilometers per Hour to Miles per Hour",
+                "Miles per Hour to Kilometers per Hour"
         };
         // Hämta användarens val av omvandlingstyp med hjälp av en GUI-dialog.
         String speedChoice = (String) JOptionPane.showInputDialog(
                 null,
-                "Välj typ av hastighetsomvandling:",
-                "Hastighetsomvandling",
+                "Select type of speed conversion:",
+                "Speed Conversion",
                 JOptionPane.QUESTION_MESSAGE,
                 null,
                 speedOptions,
@@ -37,46 +39,49 @@ public class ConvertSpeed {
         }
         // Utför den valda omvandlingen baserat på användarens val.
         switch (speedChoice) {
-            case "Kilometer per Timme till Miles per Hour":
-                convertAndShowMessage("Kilometer per Timme", "Miles per Hour", this::kmphToMph);
+            case "Kilometers per Hour to Miles per Hour":
+                convertAndShowMessage("Kilometers per Hour", "Miles per Hour", this::kmphToMph);
                 break;
-            case "Miles per Hour till Kilometer per Timme":
-                convertAndShowMessage("Miles per Hour", "Kilometer per Timme", this::mphToKmph);
+            case "Miles per Hour to Kilometers per Hour":
+                convertAndShowMessage("Miles per Hour", "Kilometers per Hour", this::mphToKmph);
                 break;
             default:
-                showMessage("Ogiltigt val");
+                showMessage("Invalid selection");
         }
     }
 
-    // Hjälpmetod för att hämta decimalinmatning från användaren
-    private double getDoubleInput(String message) {
+    //  Använder en GUI-dialog för att ta emot användarens inmatning.
+    //  Hanterar ogiltig inmatning genom rekursivt anrop.
+    double getDoubleInput(String message) {
         String input = JOptionPane.showInputDialog(null, message);
         try {
             return Double.parseDouble(input);
         } catch (NumberFormatException e) {
-            showMessage("Ogiltig inmatning. Ange ett giltigt nummer. ");
+            showMessage("Invalid input. Please enter a valid number.");
             return getDoubleInput(message);
         }
     }
 
-    // Hjälpmetod för att visa meddelanden för användaren
+    //  Visar meddelanden för användaren genom ett GUI-dialogfönster.
+    //  Använder JOptionPane.showMessageDialog för att visa meddelanden.
     private void showMessage(String message) {
         JOptionPane.showMessageDialog(null, message);
     }
 
-    // Hjälpmetod för att konvertera och visa resultatet
+    // Utför hastighetsomvandling och visar resultatet för användaren.
     private void convertAndShowMessage(String fromUnit, String toUnit, Converter converter) {
-        double input = getDoubleInput("Ange hastighet i " + fromUnit + ":");
+        double input = getDoubleInput("Enter speed in " + fromUnit + ":");
         double result = converter.convert(input);
-        showMessage(input + " " + fromUnit + " är lika med " + result + " " + toUnit + ".");
+        showMessage(input + " " + fromUnit + " is equal to " + result + " " + toUnit + ".");
     }
 
-    // Funktionellt gränssnitt för omvandlare
+    // Definierar ett funktionellt gränssnitt för hastighetsomvandlare.
     @FunctionalInterface
     private interface Converter {
         double convert(double input);
     }
     // Huvudmetod för att skapa en instans av ConvertSpeed och köra hastighetsomvandlingen.
+    // Använder objektmetoden runConversion för att initiera och driva hastighetsomvandlingen.
     public static void main(String[] args) {
         // Skapa en instans av ConvertSpeed
         ConvertSpeed speedConverter = new ConvertSpeed();
