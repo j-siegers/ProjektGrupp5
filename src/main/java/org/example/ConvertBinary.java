@@ -31,21 +31,21 @@ public class ConvertBinary {
         ConvertBinary converter = new ConvertBinary();
 
        // Array med alternativ för konvertering
-        String[] options = { "Text till binärt", "Text till hexadecimalt", "Bytes"};
+        String[] options = {"Text to binary", "Text to hexadecimal", "Bytes"};
         // JOptionPane valmeny
-        converter.menuChoice = JOptionPane.showOptionDialog(null, "Vad vill du konvertera?",
-                "ConvertBinary - Välj ett alternativ:",
+        converter.menuChoice = JOptionPane.showOptionDialog(null, "What do you want to convert?",
+                "ConvertBinary - Choose an option:",
                 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
         // Inmatning av sträng som ska konverteras. If satsen körs om valet är byteskonvertering
         if (converter.menuChoice == 2)
             converter.inputData = JOptionPane.showInputDialog(null,
-                    "Skriv värdet du vill konvertera från (t.ex 1000 KB)\n" +
-                            "Tillåtna enheter: B, KB, MB, GB & TB");
+                    "Write the value you want to convert from (ex. 1000 KB)\n" +
+                            "Allowed units: B, KB, MB, GB & TB");
 
         else
             converter.inputData = JOptionPane.showInputDialog(null,
-                    "Skriv texten du vill konvertera");
+                    "Write the text you want to convert.");
 
         // Efter gjort val skickas objektet till inputConverter där resultat inhämtas
         String result = inputConverter(converter);
@@ -61,7 +61,7 @@ public class ConvertBinary {
      * @param choice ConvertBinary object
      * @return Resultat av val i strängformat
      */
-    public static String inputConverter (ConvertBinary choice){
+    public static String inputConverter(ConvertBinary choice){
         // Vid binär omvandling körs denna kod
         if (choice.menuChoice == 0) {
 
@@ -184,11 +184,11 @@ public class ConvertBinary {
 
             // Felmeddelande
             } else
-                return "Du måste skriva b, kb, mb, gb eller tb efter talet";
+                return "You must write b, kb, mb, gb eller tb after the number";
 
         // Retur av felmeddelande om inmatad data är tom
         } else
-            return "Fel: " + error;
+            return "Error: " + error;
 
     }
 }
