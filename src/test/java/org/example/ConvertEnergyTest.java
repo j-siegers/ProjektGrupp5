@@ -17,6 +17,14 @@ public class ConvertEnergyTest {
         double result2 = ConvertEnergy.getConversionFactor(5, 1);
         assertEquals(3600000.0, result2, 0.0001);
 
+        // Test case: Kilocalorie till Watt-timmar
+        double result3 = ConvertEnergy.getConversionFactor(3, 4);
+        assertEquals(1.162222, result3, 0.0001);
+
+        // Test case: Watt-hours till Kilowatt-timmar
+        double result4 = ConvertEnergy.getConversionFactor(4, 5);
+        assertEquals(0.001, result4, 0.0001);
+
     }
 
     @Test
@@ -24,7 +32,9 @@ public class ConvertEnergyTest {
         // Testar GetUnitIndex för olika enheter
 
         assertEquals(1, ConvertEnergy.getUnitIndex("Joule"));
+        assertEquals(2, ConvertEnergy.getUnitIndex("Kilojoule"));
         assertEquals(3, ConvertEnergy.getUnitIndex("Kilokalorie"));
+        assertEquals(4, ConvertEnergy.getUnitIndex("Watt-timmar"));
         assertEquals(5, ConvertEnergy.getUnitIndex("Kilowatt-timmar"));
     }
 }
