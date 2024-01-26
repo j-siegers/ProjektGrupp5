@@ -2,6 +2,7 @@ package org.example;
 import javax.swing.*;
 
 public class ConvertArea {
+    // kör programmet, anropar de andra metoderna
     public void runConversion() {
         double inputAmount;
 
@@ -11,7 +12,6 @@ public class ConvertArea {
         String inputFrom = inputDialog("Från: ", areaChoice);
         // Till - Dropdown-lista
         String inputTo = inputDialog("Till: ", areaChoice);
-
 
         // Ange tal som ska konverteras
         String inputAmountStr = JOptionPane.showInputDialog("Tal");
@@ -23,28 +23,26 @@ public class ConvertArea {
             return;
         }
 
-        // Skapar en instans av klassen ConvertArea för att använda convert-metoden
-        ConvertArea doConversion = new ConvertArea();
-        double result = doConversion.convert(inputFrom, inputTo, inputAmount
-        );
-
+        // anropar metoden med användarens val som argument
+        double result = convert(inputFrom, inputTo, inputAmount);
 
         // Presenterar resultatet.
         JOptionPane.showMessageDialog(
                 null, inputAmount + inputFrom + " är " + result + inputTo, "Resultat", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    // -------- Metoder
+
+
     // Metoden skapar en dialiogruta med lista av alternativ
-    private String inputDialog(String message, String[] options) {
+    public String inputDialog(String message, String[] options) {
         return (String) JOptionPane.showInputDialog(
                 null, message, "Area", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
     }
 
-    // --Metod för att göra okoovertering, baserat på användarens val.
+    // --Metod för att göra konvertering, baserat på användarens val.
     public double convert(String inputFrom, String inputTo, double inputAmount) {
         // Logik för omvnadling
-        double result = inputAmount;                    // Här lagras resultatet från omvandlingen, skriver över med det nya värdet.
+        double result = inputAmount;                    // Här lagras resultatet från omvandlingen
 
         switch (inputFrom) {                            // Det användaren valt att konvertera FRÅN
             case "cm²":                                 // Om användaren valt FRÅN cm²
@@ -82,11 +80,4 @@ public class ConvertArea {
         }
         return result;
     }
-
-    // Kör programmet för sig självt, alltså utan Main klassen
-    public static void main(String[] args){
-        ConvertArea runProgram = new ConvertArea();
-        runProgram.runConversion();
-    }
 }
-
